@@ -5,6 +5,7 @@
 
 class Array
   def sum
+    self.inject(0,:+)
   end
 end
 
@@ -16,9 +17,11 @@ end
 
 class Array
   def square!
+    self.map! {|number| number*number }
   end
 
   def square
+    self.map {|number| number*number }
   end
 end
 
@@ -36,6 +39,9 @@ end
 
 class Array
   def my_uniq
+    uniq_numbers = []
+    self.each { |num| uniq_numbers << num if !uniq_numbers.include?(num)}
+    uniq_numbers
   end
 end
 
@@ -57,6 +63,13 @@ end
 
 class Array
   def two_sum
+    sum_to_zero = []
+    (0...self.length-1).each do |idx|
+      (idx+1..self.length-1).each do |j|
+        sum_to_zero << [idx,j] if self[idx] + self[j] == 0
+      end
+    end
+    sum_to_zero
   end
 end
 
@@ -69,6 +82,13 @@ end
 
 class Array
   def median
+    return nil if self.empty?
+    array_sorted = self.sort
+    if length.odd?
+      array_sorted[length/ 2]
+    else
+      (array_sorted[length/2] + array_sorted[length / 2 - 1]).fdiv(2)
+    end
   end
 end
 

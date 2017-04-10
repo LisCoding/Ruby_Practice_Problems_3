@@ -18,6 +18,12 @@
 
 class String
   def caesar(shift)
+    alpha = ("a".."z").to_a
+    caesar_word = ""
+    self.chars do |char|
+      caesar_word << alpha[(alpha.index(char) + shift) % 26]
+    end
+    caesar_word
   end
 end
 
@@ -36,7 +42,16 @@ end
 
 class Hash
   def difference(other_hash)
+    uniq_hash = {}
+    self.keys.each do |key|
+      uniq_hash[key] = self[key] if !other_hash.include?(key)
+    end
+    other_hash.keys.each do |key|
+      uniq_hash[key] = other_hash[key] if !self.include?(key)
+    end
+    uniq_hash
   end
+
 end
 
 # Stringify
@@ -98,6 +113,16 @@ end
 
 class Fixnum
   def stringify(base)
+    char_hash = { 0 => "0", 1 => "1" , 2 => "2", 3 => "3", 4 => "4", 5 => "5" , 6 => "6", 7 => "7",
+            8 => "8", 9 => "9" , 10 => "a", 11 => "b", 12 => "c", 13 => "d" , 14 => "e", 15 => "f"}
+    result = ""
+    pow = 0
+    while self / (base**pow) > 0
+      char = (self/base**pow) % base
+      result << char_hash[char]
+      pow += 1
+    end
+    result.reverse 
   end
 end
 
